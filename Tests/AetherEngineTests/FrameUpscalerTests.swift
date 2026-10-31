@@ -160,7 +160,7 @@ struct FrameUpscalerTests {
         #expect(mismatches == 0)
     }
 
-    @Test
+    @Test(.enabled(if: UpscalerGate.mlAvailable))
     @available(macOS 26, iOS 26, tvOS 26, visionOS 26, *)
     func reconfiguresOnInputSizeChange() throws {
         let up = try upscaler(try plan(720, 480, sar: (8, 9), ml: FrameUpscaler.mlScaleFactors(720, 480)))
@@ -348,7 +348,7 @@ struct FrameUpscalerTests {
         #expect(up.isDisabled && !up.isDegraded)
     }
 
-    @Test
+    @Test(.enabled(if: UpscalerGate.mlAvailable))
     @available(macOS 26, iOS 26, tvOS 26, visionOS 26, *)
     func timingBreakdownIsRecorded() throws {
         let up = try upscaler(try plan(720, 480, sar: (8, 9), ml: FrameUpscaler.mlScaleFactors(720, 480)))
@@ -508,7 +508,7 @@ struct FrameUpscalerTests {
     }
 
     /// Another size mid-stream republishes: the engine replaces `activeUpscale` with the new plan.
-    @Test
+    @Test(.enabled(if: UpscalerGate.mlAvailable))
     @available(macOS 26, iOS 26, tvOS 26, visionOS 26, *)
     func firstFrameIsSentAgainAfterARebuild() throws {
         let up = try upscaler(try plan(720, 480, sar: (8, 9), ml: []))
